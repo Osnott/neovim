@@ -1,0 +1,49 @@
+{
+  "plugins": {
+    "blink.cmp": {
+      "rev": "2408f14",
+      "src": "https://github.com/saghen/blink.cmp",
+      "version": ">=0.0.0"
+    },
+    "mini.extra": {
+      "rev": "7a5231f",
+      "src": "https://github.com/nvim-mini/mini.extra"
+    },
+    "mini.pick": {
+      "rev": "c48ce33",
+      "src": "https://github.com/nvim-mini/mini.pick"
+    },
+    "nvim": {
+      "rev": "234fc04",
+      "src": "https://github.com/catppuccin/nvim"
+    },
+    "nvim-autopairs": {
+      "rev": "7a2c97c",
+      "src": "https://github.com/windwp/nvim-autopairs"
+    },
+    "nvim-lspconfig": {
+      "rev": "2010fc6",
+      "src": "https://github.com/neovim/nvim-lspconfig"
+    },
+    "nvim-web-devicons": {
+      "rev": "8dcb311",
+      "src": "https://github.com/nvim-tree/nvim-web-devicons"
+    },
+    "oil.nvim": {
+      "rev": "7e1cd77",
+      "src": "https://github.com/stevearc/oil.nvim"
+    },
+    "typst-preview.nvim": {
+      "rev": "64469f8",
+      "src": "https://github.com/chomosuke/typst-preview.nvim"
+    },
+    "vim-commentary": {
+      "rev": "64a654e",
+      "src": "https://github.com/tpope/vim-commentary"
+    },
+    "which-key.nvim": {
+      "rev": "3aab214",
+      "src": "https://github.com/folke/which-key.nvim"
+    }
+  }
+}
