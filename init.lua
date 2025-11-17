@@ -74,7 +74,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 -- lsp
 
-vim.lsp.enable({ "lua_ls", "tinymist", "vtsls", "basedpyright", "nixd" })
+vim.lsp.enable({ "lua_ls", "tinymist", "vtsls", "basedpyright", "nixd", "zls" })
 
 -- etc
 
