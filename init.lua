@@ -37,6 +37,7 @@ vim.pack.add({
 	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },
 	{ src = "https://github.com/windwp/nvim-autopairs" },
   { src = "https://github.com/chomosuke/typst-preview.nvim" },
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter" },
 })
 
 require "mini.pick".setup()
