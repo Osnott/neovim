@@ -20,6 +20,8 @@ vim.keymap.set('n', '<Down>', '<Nop>')
 vim.keymap.set('n', '<Left>', '<Nop>')
 vim.keymap.set('n', '<Right>', '<Nop>')
 vim.keymap.set('n', '<ESC>', ':noh<CR>')
+vim.keymap.set('n', '<leader>ts', ':split | terminal<CR><C-w>ji')
+vim.keymap.set('n', '<leader>tv', ':vsplit | terminal<CR><C-w>li')
 
 -- plugs
 
