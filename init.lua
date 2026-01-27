@@ -40,7 +40,7 @@ vim.pack.add({
 	{ src = "https://github.com/nvim-mini/mini.extra" },
 	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },
 	{ src = "https://github.com/windwp/nvim-autopairs" },
-  { src = "https://github.com/chomosuke/typst-preview.nvim" },
+	{ src = "https://github.com/chomosuke/typst-preview.nvim" },
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter" },
 })
 
@@ -49,6 +49,21 @@ require "mini.extra".setup()
 require "oil".setup()
 require "blink.cmp".setup()
 require "nvim-autopairs".setup()
+require "nvim-treesitter.configs".setup({
+	ensure_installed = { "tsx", "c", "zig", "lua", "markdown_inline", "markdown", "python", "vim", "vimdoc", "nix" },
+	auto_install = true,
+	modules = {
+		highlight = {
+			enable = true
+		},
+		indent = {
+			enable = true
+		},
+		incremental_selection = {
+			enable = true
+		}
+	}
+})
 
 -- plug keybinds
 
@@ -79,7 +94,34 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 -- lsp
 
+vim.lsp.config('tinymist', {
+	settings = {
+		formatterMode = "typstyle",
+		formatterProseWrap = true,
+		formatterPrintWidth = 80,
+		formatterIndentSize = 2,
+	}
+})
+
 vim.lsp.enable({ "lua_ls", "tinymist", "vtsls", "basedpyright", "nixd", "zls" })
+
+-- treesitter
+
+-- vim.api.nvim_create_autocmd('BufReadPost', {
+-- 	pattern = { '*' },
+-- 	callback = function()
+-- 		local success, _ = pcall(function() vim.treesitter.start() end)
+
+-- 		if success then
+-- 			vim.cmd.syntax("off")
+-- 			vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+-- 			vim.notify("Started treesitter", vim.log.levels.INFO)
+-- 		else
+-- 			vim.notify("Could not start treesitter", vim.log.levels.INFO)
+-- 		end
+-- 	end,
+-- 	once = true
+-- })
 
 -- etc
 

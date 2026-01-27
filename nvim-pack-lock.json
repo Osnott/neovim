@@ -37,6 +37,10 @@
       "rev": "7e1cd77",
       "src": "https://github.com/stevearc/oil.nvim"
     },
+    "render-markdown.nvim": {
+      "rev": "ae89236e2389836cf1c3787b2b80d5d8685cc13f",
+      "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
+    },
     "typst-preview.nvim": {
       "rev": "64469f8",
       "src": "https://github.com/chomosuke/typst-preview.nvim"
