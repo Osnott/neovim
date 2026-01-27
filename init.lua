@@ -107,21 +107,18 @@ vim.lsp.enable({ "lua_ls", "tinymist", "vtsls", "basedpyright", "nixd", "zls" })
 
 -- treesitter
 
--- vim.api.nvim_create_autocmd('BufReadPost', {
--- 	pattern = { '*' },
--- 	callback = function()
--- 		local success, _ = pcall(function() vim.treesitter.start() end)
+vim.api.nvim_create_autocmd("FileType", {
+	callback = function(ctx)
+		-- highlights
+		local hasStarted = pcall(vim.treesitter.start)
 
--- 		if success then
--- 			vim.cmd.syntax("off")
--- 			vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
--- 			vim.notify("Started treesitter", vim.log.levels.INFO)
--- 		else
--- 			vim.notify("Could not start treesitter", vim.log.levels.INFO)
--- 		end
--- 	end,
--- 	once = true
--- })
+		-- indent
+		local noIndent = { "tsx" }
+		if hasStarted and not vim.list_contains(noIndent, ctx.match) then
+			vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+		end
+	end,
+})
 
 -- etc
 
