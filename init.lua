@@ -50,7 +50,7 @@ require "oil".setup()
 require "blink.cmp".setup()
 require "nvim-autopairs".setup()
 require "nvim-treesitter.configs".setup({
-	ensure_installed = { "tsx", "c", "zig", "lua", "markdown_inline", "markdown", "python", "vim", "vimdoc", "nix" },
+	ensure_installed = { "tsx", "c", "zig", "lua", "markdown_inline", "markdown", "python", "vim", "vimdoc", "nix", "rust" },
 	auto_install = true,
 	highlight = {
 		enable = true
@@ -101,7 +101,7 @@ vim.lsp.config('tinymist', {
 	}
 })
 
-vim.lsp.enable({ "lua_ls", "tinymist", "vtsls", "basedpyright", "nixd", "zls", "cssls" })
+vim.lsp.enable({ "lua_ls", "tinymist", "vtsls", "basedpyright", "nixd", "zls", "cssls", "rust_analyzer" })
 
 -- treesitter
 
