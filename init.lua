@@ -41,7 +41,10 @@ vim.pack.add({
 	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },
 	{ src = "https://github.com/windwp/nvim-autopairs" },
 	{ src = "https://github.com/chomosuke/typst-preview.nvim" },
-	{ src = "https://github.com/nvim-treesitter/nvim-treesitter" },
+	{
+		src = "https://github.com/nvim-treesitter/nvim-treesitter",
+		version = 'main',
+	},
 })
 
 require "mini.pick".setup()
@@ -49,19 +52,6 @@ require "mini.extra".setup()
 require "oil".setup()
 require "blink.cmp".setup()
 require "nvim-autopairs".setup()
-require "nvim-treesitter.configs".setup({
-	ensure_installed = { "tsx", "c", "zig", "lua", "markdown_inline", "markdown", "python", "vim", "vimdoc", "nix", "rust" },
-	auto_install = true,
-	highlight = {
-		enable = true
-	},
-	indent = {
-		enable = true
-	},
-	incremental_selection = {
-		enable = true
-	}
-})
 
 -- plug keybinds
 
@@ -111,7 +101,7 @@ vim.api.nvim_create_autocmd("FileType", {
 		local hasStarted = pcall(vim.treesitter.start)
 
 		-- indent
-		local noIndent = {  }
+		local noIndent = {}
 		if hasStarted and not vim.list_contains(noIndent, ctx.match) then
 			vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 		end
