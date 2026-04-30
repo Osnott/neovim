@@ -12,18 +12,16 @@ vim.o.winborder = "rounded"
 
 -- keybinds
 
-vim.keymap.set('n', '<leader>o', ':update<CR> :source<CR>')
-vim.keymap.set('n', '<leader>w', ':write<CR>')
-vim.keymap.set('n', '<leader>q', ':quit<CR>')
+vim.keymap.set('n', '<leader>o', ':update<CR>:source<CR>', { silent = true })
 vim.keymap.set('n', '<Up>', '<Nop>')
 vim.keymap.set('n', '<Down>', '<Nop>')
 vim.keymap.set('n', '<Left>', '<Nop>')
 vim.keymap.set('n', '<Right>', '<Nop>')
-vim.keymap.set('n', '<ESC>', ':noh<CR>')
-vim.keymap.set('n', '<leader>th', ':split<CR><C-w>j | :terminal<CR>i')
-vim.keymap.set('n', '<leader>tv', ':vsplit<CR><C-w>l | :terminal<CR>i')
-vim.keymap.set('n', '<leader>h', ':split<CR><C-w>j')
-vim.keymap.set('n', '<leader>v', ':vsplit<CR><C-w>l')
+vim.keymap.set('n', '<ESC>', ':noh<CR>', { silent = true })
+vim.keymap.set('n', '<leader>th', ':split<CR><C-w>j | :terminal<CR>i', { silent = true })
+vim.keymap.set('n', '<leader>tv', ':vsplit<CR><C-w>l | :terminal<CR>i', { silent = true })
+vim.keymap.set('n', '<leader>h', ':split<CR><C-w>j', { silent = true })
+vim.keymap.set('n', '<leader>v', ':vsplit<CR><C-w>l', { silent = true })
 
 -- plugs
 
@@ -38,6 +36,7 @@ vim.pack.add({
 	},
 	{ src = "https://github.com/tpope/vim-commentary" },
 	{ src = "https://github.com/nvim-mini/mini.extra" },
+	{ src = "https://github.com/nvim-mini/mini.statusline" },
 	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },
 	{ src = "https://github.com/windwp/nvim-autopairs" },
 	{ src = "https://github.com/chomosuke/typst-preview.nvim" },
@@ -56,11 +55,12 @@ require "nvim-autopairs".setup()
 -- plug keybinds
 
 vim.keymap.set('n', '<leader>fm', vim.lsp.buf.format)
-vim.keymap.set('n', '<leader>ff', ":Pick files<CR>")
-vim.keymap.set('n', '<leader>fh', ":Pick help<CR>")
-vim.keymap.set('n', '<leader>fz', ":Pick grep_live<CR>")
-vim.keymap.set('n', '<leader>fw', ":Pick buf_lines<CR>")
-vim.keymap.set('n', '<leader>e', ":Oil<CR>")
+vim.keymap.set('n', '<leader>ff', ":Pick files<CR>", { silent = true })
+vim.keymap.set('n', '<leader>fh', ":Pick help<CR>", { silent = true })
+vim.keymap.set('n', '<leader>fz', ":Pick grep_live<CR>", { silent = true })
+vim.keymap.set('n', '<leader>fw', ":Pick buf_lines<CR>", { silent = true })
+vim.keymap.set('n', '<leader>fb', ":Pick buffers<CR>", { silent = true })
+vim.keymap.set('n', '<leader>e', ":Oil<CR>", { silent = true })
 vim.keymap.set({ 'n', 'i' }, '<C-CR>', require('blink.cmp').accept)
 
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -108,6 +108,34 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
+-- statusline
+
+require "mini.statusline".setup({
+	content = {
+		active = function()
+			local mode, mode_hl = MiniStatusline.section_mode({ trunc_width = 120 })
+			local git           = MiniStatusline.section_git({ trunc_width = 40 })
+			local diff          = MiniStatusline.section_diff({ trunc_width = 75 })
+			local diagnostics   = MiniStatusline.section_diagnostics({ trunc_width = 75, signs = { ERROR = ' ', WARN = ' ', INFO = ' ', HINT = ' ' } })
+			local lsp           = MiniStatusline.section_lsp({ trunc_width = 120 })
+			local filename      = MiniStatusline.section_filename({ trunc_width = 140 })
+			local fileinfo      = MiniStatusline.section_fileinfo({ trunc_width = 120 })
+			local location      = MiniStatusline.section_location({ trunc_width = 75 })
+			local search        = MiniStatusline.section_searchcount({ trunc_width = 75 })
+
+			return MiniStatusline.combine_groups({
+				{ hl = mode_hl,                 strings = { mode } },
+				{ hl = 'MiniStatuslineDevinfo', strings = { git, diff, diagnostics, lsp } },
+				'%<', -- Mark general truncate point
+				{ hl = 'MiniStatuslineFilename', strings = { filename } },
+				'%=', -- End left alignment
+				{ hl = 'MiniStatuslineFileinfo', strings = { fileinfo } },
+				{ hl = mode_hl,                  strings = { search, location } },
+			})
+		end
+	},
+})
+
 -- etc
 
 vim.diagnostic.config({
@@ -116,7 +144,7 @@ vim.diagnostic.config({
 			[vim.diagnostic.severity.ERROR] = "",
 			[vim.diagnostic.severity.WARN] = "",
 			[vim.diagnostic.severity.INFO] = "",
-			[vim.diagnostic.severity.HINT] = "💡",
+			[vim.diagnostic.severity.HINT] = "",
 		}
 	}
 })

@@ -13,6 +13,10 @@
       "rev": "c48ce33",
       "src": "https://github.com/nvim-mini/mini.pick"
     },
+    "mini.statusline": {
+      "rev": "b456bfe845e475e9cec065b7a9a1ef657ad2f41b",
+      "src": "https://github.com/nvim-mini/mini.statusline"
+    },
     "nvim": {
       "rev": "234fc04",
       "src": "https://github.com/catppuccin/nvim"
