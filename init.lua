@@ -10,6 +10,22 @@ vim.o.swapfile = false
 vim.g.mapleader = " "
 vim.o.winborder = "rounded"
 
+-- helpers
+
+local function open_floating_window(bufnr)
+	local width = math.floor(vim.o.columns * 0.80)
+	local height = math.floor(vim.o.lines * 0.80)
+
+	vim.api.nvim_open_win(bufnr, true,
+		{
+			relative = 'editor',
+			width = width,
+			height = height,
+			col = (vim.o.columns - width) / 2,
+			row = (vim.o.lines - height) / 2
+		})
+end
+
 -- keybinds
 
 vim.keymap.set('n', '<leader>o', ':update<CR>:source<CR>', { silent = true })
@@ -18,10 +34,20 @@ vim.keymap.set('n', '<Down>', '<Nop>')
 vim.keymap.set('n', '<Left>', '<Nop>')
 vim.keymap.set('n', '<Right>', '<Nop>')
 vim.keymap.set('n', '<ESC>', ':noh<CR>', { silent = true })
-vim.keymap.set('n', '<leader>th', ':split<CR><C-w>j | :terminal<CR>i', { silent = true })
-vim.keymap.set('n', '<leader>tv', ':vsplit<CR><C-w>l | :terminal<CR>i', { silent = true })
+vim.keymap.set('n', '<leader>th', ':split | term<CR>i', { silent = true })
+vim.keymap.set('n', '<leader>tv', ':vsplit | :term<CR>i', { silent = true })
 vim.keymap.set('n', '<leader>h', ':split<CR><C-w>j', { silent = true })
 vim.keymap.set('n', '<leader>v', ':vsplit<CR><C-w>l', { silent = true })
+vim.keymap.set('n', '<leader>ns', function()
+	vim.ui.input({ prompt = "Enter filetype for new scratch buffer: " }, function(input)
+		if input then
+			local bufnr = vim.api.nvim_create_buf(true, true)
+			vim.api.nvim_win_set_buf(0, bufnr)
+			-- vim.treesitter.start(bufnr, input)
+			vim.api.nvim_buf_set_option(bufnr, 'filetype', input)
+		end
+	end)
+end)
 
 -- plugs
 
@@ -59,9 +85,18 @@ vim.keymap.set('n', '<leader>ff', ":Pick files<CR>", { silent = true })
 vim.keymap.set('n', '<leader>fh', ":Pick help<CR>", { silent = true })
 vim.keymap.set('n', '<leader>fz', ":Pick grep_live<CR>", { silent = true })
 vim.keymap.set('n', '<leader>fw', ":Pick buf_lines<CR>", { silent = true })
-vim.keymap.set('n', '<leader>fb', ":Pick buffers<CR>", { silent = true })
+-- vim.keymap.set('n', '<leader>fb', ":Pick buffers<CR>", { silent = true })
 vim.keymap.set('n', '<leader>e', ":Oil<CR>", { silent = true })
 vim.keymap.set({ 'n', 'i' }, '<C-CR>', require('blink.cmp').accept)
+vim.keymap.set('n', '<leader>fb', function()
+	local open_float_cur = function()
+		open_floating_window(MiniPick.get_picker_matches().current.bufnr)
+	end
+
+	local buffer_mappings = { open_float = { char = '<S-CR>', func = open_float_cur } }
+
+	require("mini.pick").builtin.buffers({ include_current = false }, { mappings = buffer_mappings })
+end)
 
 vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(args)
