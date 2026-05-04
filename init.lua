@@ -126,7 +126,7 @@ vim.lsp.config('tinymist', {
 	}
 })
 
-vim.lsp.enable({ "lua_ls", "tinymist", "vtsls", "basedpyright", "nixd", "zls", "cssls", "rust_analyzer" })
+vim.lsp.enable({ "lua_ls", "tinymist", "vtsls", "basedpyright", "nixd", "zls", "cssls", "rust_analyzer", "marksman" })
 
 -- treesitter
 
